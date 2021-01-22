@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}">
 </head>
 <body>
+    <img src="{{ url_for('static',filename='img/030.jpg') }}" alt="">
     <h1>这里是Flask demo2的首页</h1>
     <h3>姓名： {{ name }}</h3>
     <h3>年龄： {{ age }}</h3>
     {% if sex %}
     <h3>性别：{{ sex }}</h3>
     {% endif %}
+    <script src="{{ url_for('static',filename='js/demo.js') }}"></script>
 </body>
 </html>
