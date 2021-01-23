@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block main %}
+{# demo3的注册 #}
+{#
+<div class="container">
+    <form action="{{ url_for('regist') }}" method="post">
+        <div class="form-group">
+            <label for="exampleInputEmail1">邮箱📪：</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="请输入邮箱📪" name="email">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">密码：</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="请输入密码" name="password">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">重复密码：</label>
+            <input type="password" class="form-control" id="exampleInputPassword2" placeholder="再次输入密码"
+                   name="password2">
+        </div>
+        <button type="submit" class="btn btn-default">注册</button>
+    </form>
+</div>
+#}
+
+{# demo4的注册 #}
+<div class="container">
+    {#<form class="form-horizontal" action="{{ url_for('regist') }}" method="post">#}
+    <form class="form-horizontal" action="{{ url_for('user.regist') }}" method="post">
+        <div class="form-group">
+            {% for error in get_flashed_messages() %}
+            <p class="text-danger">{{ error }}</p>
+            {% endfor %}
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">邮箱📪：</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="请输入邮箱📪" name="email">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">密码：</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="请输入密码" name="password">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">重复密码：</label>
+            <input type="password" class="form-control" id="exampleInputPassword2" placeholder="再次输入密码"
+                   name="password2">
+        </div>
+        <button type="submit" class="btn btn-default">注册</button>
+    </form>
+</div>
+{% endblock %}

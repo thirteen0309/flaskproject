@@ -3,11 +3,12 @@ author:czy
 creat_date: 2021/1/22 11:39
 u_date: 2021/1/22 11:39
 reversion:1.0
-file_name: demo3
+file_name: demo4
 """
-from flask import Flask, render_template, request, redirect, url_for
-
+from flask import Flask, render_template, request, redirect, url_for, flash, session
+import os
 demo3 = Flask(__name__)
+demo3.secret_key=os.urandom(24)
 
 story = {
     "name": "我被困在同一天一千年",
@@ -38,13 +39,9 @@ users = [
     },
 ]
 
-currentuser = None
-
 
 @demo3.route("/")
 def index():
-    global currentuser
-    user = currentuser
     articles = story["article"]
     return render_template("index_demo3.html", **locals())
 
@@ -59,7 +56,6 @@ def detail(pk):
 
 @demo3.route("/login", methods=["GET", "POST"])
 def login():
-    global currentuser
     if request.method == "GET":
         return render_template("login.html", **locals())
     elif request.method == "POST":
@@ -68,8 +64,9 @@ def login():
         password = request.form.get("password")
         for u in users:
             if u["email"] == email and u["password"] == password:
-                currentuser = u
+                session["user"] = email
                 return redirect(url_for('index'))
+        flash("用户名或密码错误")
         return redirect(url_for('login'))
 
 
@@ -81,7 +78,13 @@ def regist():
         email = request.form.get("email")
         password = request.form.get("password")
         password2 = request.form.get("password2")
-        global users
+        for u in users:
+            if u["email"] == email:
+                flash("邮箱已被注册")
+                return redirect(url_for("regist"))
+        if password != password2:
+            flash("两次密码不一致")
+            return redirect(url_for("regist"))
         users.append(
             {
                 "email": email,
@@ -93,10 +96,8 @@ def regist():
 
 @demo3.route("/logout")
 def logout():
-    global currentuser
-    currentuser = None
-    user = currentuser
-    return redirect(url_for('index'))
+    session.pop("user")
+    return redirect(url_for("index"))
 
 
 if __name__ == '__main__':
